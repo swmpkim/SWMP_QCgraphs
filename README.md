@@ -27,7 +27,7 @@ Water Quality Scripts
 
 #### Example output
 
-![](output/GNDPCWQ041618_QC.png)
+![](readme_images/GNDPCWQ041618_QC.png)
 
 Weather Station Scripts
 -----------------------
@@ -55,13 +55,13 @@ Don't be scared; these actually look pretty good in pdf format. I saved them as 
 
 (If you need a hint, look closely at Atemp - it doesn't get that cold in south Mississippi. There are also some apparent battery problems.)
 
-![See some problems? This is why we graph the data.](output/gndcrmet110717_QC1.png)
+![See some problems? This is why we graph the data.](readme_images/gndcrmet110717_QC1.png)
 
 **Wind Rose**
 
 This is pretty typical for winter at our site. Most wind is out of the North.
 
-![Wind Rose](output/gndcrmet110717_QC2.png)
+![Wind Rose](readme_images/gndcrmet110717_QC2.png)
 
 Instructions for running scripts
 ================================

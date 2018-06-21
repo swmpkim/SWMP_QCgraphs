@@ -21,7 +21,7 @@ This is a collection of R scripts that can be used to QC SWMP data. Each script 
 
 #### Example output  
 
-![](output/GNDPCWQ041618_QC.png)
+![](readme_images/GNDPCWQ041618_QC.png)
 
 
 ## Weather Station Scripts  
@@ -50,13 +50,13 @@ __See some problems? This is why it's important to graph data.__
 
 (If you need a hint, look closely at Atemp - it doesn't get that cold in south Mississippi. There are also some apparent battery problems.)
 
-![See some problems? This is why we graph the data.](output/gndcrmet110717_QC1.png)  
+![See some problems? This is why we graph the data.](readme_images/gndcrmet110717_QC1.png)  
 
 __Wind Rose__  
 
 This is pretty typical for winter at our site. Most wind is out of the North.
 
-![Wind Rose](output/gndcrmet110717_QC2.png)
+![Wind Rose](readme_images/gndcrmet110717_QC2.png)
 
 
 
