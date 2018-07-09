@@ -6,7 +6,7 @@ output:
     html_notebook: default
 ---
 
-This is a collection of R scripts that can be used to QC SWMP data. Each script has limited interactivity - in the course of running, you will be able to choose a working directory through Windows Explorer. These work on QC files returned from the CDMO after data upload. They could be modified to work on raw files off of instruments; mostly things are named differently, although EXO files need some massaging.
+This is a collection of R scripts that can be used to QC SWMP data. Right click on the script name above to download. Each script has limited interactivity - in the course of running, you will be able to choose a working directory through Windows Explorer. These work on QC files returned from the CDMO after data upload. They could be modified to work on raw files off of instruments; mostly things are named differently, although EXO files need some massaging.
 
 # Script Descriptions  
 
@@ -17,11 +17,12 @@ This is a collection of R scripts that can be used to QC SWMP data. Each script 
 `WQgraphs_QCfile_looping`: runs through every CSV in the selected working directory; generates pdf output for each.  
 
 +  Make sure the only CSVs in your folder are water quality QC files emailed from the CDMO after file upload.  
-+  Parameters plotted are: Temp, SpCond, Sal, Depth, DO_pct, pH, Turb, and Battery. 
++  Parameters plotted are: Temp, SpCond, Sal, Depth, DO_pct, pH, Turb, and Battery.  
++  If you need to graph Level instead of Depth, change it on line 102 of the script.
 
 #### Example output  
 
-![](readme_images/GNDPCWQ041618_QC.png)
+![](readme_images/GNDBCWQ061918_QC.png)
 
 
 ## Weather Station Scripts  
@@ -62,7 +63,7 @@ This is pretty typical for winter at our site. Most wind is out of the North.
 
 # Instructions for running scripts  
 
-These instructions are also in comments at the top of each script.  
+These instructions are also in comments at the top of each script. Scripts can be downloaded by right-clicking on the name of the file in the list above, and selecting "save link as". Another option is to click the green "Clone or Download" button to get them all.  
 
 1.  Open the script.  
 2.  Put the cursor somewhere in the script window, and hit 'Ctrl+a' to select all.  
@@ -78,4 +79,4 @@ These scripts have NOT been error-proofed.
 +  If you have some CSV in your working directory that does not match the format of CDMO-emailed QC files, the script will stop in its tracks and return an error message. Move the files you want to graph into their own folder and use that instead.  
 +  If your sites report level instead of depth, you'll need to change the parameter on line 102 of the `WQgraphs_QCfile_looping` script.  
 
-Let me know if you run into any other issues! And if you know how to make these more robust to errors, feel free to make a pull request. (If you don't know what that means, just email me the scripts with your updates and I'll make them available here.)
+Let me know if you run into any other issues! You can open a GitHub issue here or just email me. And if you know how to make these scripts more robust to errors, feel free to make a pull request. (If you don't know what that means, just email me the scripts with your updates and I'll make them available here.)
