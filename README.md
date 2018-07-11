@@ -3,14 +3,17 @@ R Scripts for SWMP QC
 
 -   [Script Descriptions](#script-descriptions)
     -   [Water Quality Scripts](#water-quality-scripts)
-        -   [WQgraphs\_QCfile\_looping: Loop through files in a folder](#wqgraphs_qcfile_looping-loop-through-files-in-a-folder)
+        -   [WQgraphs\_rawEXO\_looping: Loop through raw EXO Excel files in a folder](#wqgraphs_rawexo_looping-loop-through-raw-exo-excel-files-in-a-folder)
+        -   [WQgraphs\_QCfile\_looping: Loop through CDMO-returned QC files in a folder](#wqgraphs_qcfile_looping-loop-through-cdmo-returned-qc-files-in-a-folder)
     -   [Weather Station Scripts](#weather-station-scripts)
         -   [METgraphs\_QCfile\_single-file: One file](#metgraphs_qcfile_single-file-one-file)
         -   [METgraphs\_QCfile\_looping: Loop through files in a folder](#metgraphs_qcfile_looping-loop-through-files-in-a-folder)
 -   [Instructions for running scripts](#instructions-for-running-scripts)
 -   [Some cautions](#some-cautions)
 
-This is a collection of R scripts that can be used to QC SWMP data. Right click on the script name above to download. Each script has limited interactivity - in the course of running, you will be able to choose a working directory through Windows Explorer. These work on QC files returned from the CDMO after data upload. They could be modified to work on raw files off of instruments; mostly things are named differently, although EXO files need some massaging.
+This is a collection of R scripts that can be used to QC SWMP data. Right click on the script name above to download. Each script has limited interactivity - in the course of running, you will be able to choose a working directory through Windows Explorer.
+
+Most of these work on QC files returned from the CDMO after data upload. There is one that will run on raw Excel files downloaded from YSI EXO2 instruments.
 
 Script Descriptions
 ===================
@@ -18,7 +21,15 @@ Script Descriptions
 Water Quality Scripts
 ---------------------
 
-### WQgraphs\_QCfile\_looping: Loop through files in a folder
+### WQgraphs\_rawEXO\_looping: Loop through raw EXO Excel files in a folder
+
+`WQgraphs_rawEXO_looping`: runs through every Excel (.xls or .xlsx) file in the selected working directory; generates pdf output for each.
+
+-   Make sure the only Excel files in your folder are files downloaded from EXOs. + Parameters plotted are: Temp, SpCond, Sal, Depth, DO\_pct, pH, Turb, and Battery.
+-   If you need to graph Level instead of Depth, change it on lines 77 and 122 of the script.
+-   The name of the output file (and the title above the graphs) is, by default, the full name of the Excel file, which includes instrument serial number and date-time on which the file started. To cut off all the extra stuff at the end, uncomment line 27. (You do not have to comment out line 24, but you can if you want to.)
+
+### WQgraphs\_QCfile\_looping: Loop through CDMO-returned QC files in a folder
 
 `WQgraphs_QCfile_looping`: runs through every CSV in the selected working directory; generates pdf output for each.
 
