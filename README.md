@@ -62,7 +62,7 @@ Don't be scared; these actually look pretty good in pdf format. I saved them as 
 
 This is pretty typical for winter at our site. Most wind is out of the North.
 
-![Wind Rose](readme_images/gndcrmet110717_QC2.png)
+![Wind Rose](readme_images/gndcrmet110717_QC2-2.png)
 
 Instructions for running scripts
 ================================

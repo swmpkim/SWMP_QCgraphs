@@ -1,0 +1,186 @@
+library(readxl)
+library(tidyverse)
+library(lubridate)
+
+
+# interactively choose which folder you want to work in
+library(tcltk) #this package is part of base R and does not need to be installed separately
+my.dir <- tk_choose.dir(getwd(), caption = "Choose which folder you want to work in")
+setwd(my.dir)
+
+# get the list of files in the directory that you want to graph
+names.dir <- dir(pattern = ".xls")
+n <- length(names.dir)
+
+for(i in 1:n)
+{
+    # find the next file in the loop
+    myFile <- names.dir[i] 
+    
+    
+    # generate names for output
+    x <- nchar(myFile) # counting the characters in the file name
+    
+    Title = substr(myFile, 1, x-5) # this should return the full name of the file (minus '.xlsx' -- change x-5 to x-4 if you're using .xls files)
+    
+    # If you want to get rid of all the 13A12345_010118_1200 stuff at the end of the file name, delete the # from the next line so that it runs:
+    # Title = ifelse(x > 30, substr(myFile, 1, x-29), substr(myFile, 1, x-5))
+    
+    Titlepdf <- paste0(Title, ".pdf")
+    
+    
+    ### read in the file  ################
+    # first let R look at it to find where the real data starts
+    test_in <- read_excel(path = myFile, sheet = 1)
+    # find the cell in column 1 that starts with Date -- 
+    # this indicates the header row
+    col1vec <- (test_in[,1])
+    names(col1vec) <- "col1"
+    pos <- grep("Date", col1vec$col1)
+    # read in the data, beginning with the header row
+    dat <- read_excel(myFile, sheet = 1, skip = pos)
+    
+    head(dat)
+    
+    
+    ### select a file  ##################
+    # myFile <- choose.files()
+    
+    
+    ### deal with names ###################
+    # make them all lower case
+    names(dat) <- tolower(names(dat))
+    # use make.names() to get rid of spaces and weird characters
+    names(dat) <- make.names(names(dat), unique = TRUE)
+    
+    
+    ### format and name more SWMP-ily  ####################
+    ## get date and time into DateTime format by first
+    # turning them into character strings and separating 'time' from
+    # the made-up date that it received on import
+    ## then select and rename the parameters we want to graph
+    dat2 <- dat %>%
+        mutate(date = as.character(date..mm.dd.yyyy.),
+               time = as.character(time..hh.mm.ss.),
+               time2 = substr(time, nchar(time)-8, nchar(time)),
+               datetime = paste(date, time2),
+               datetime = lubridate::ymd_hms(datetime)) %>%
+        select(datetime, 
+               temp = temp..c, 
+               spcond = spcond.ms.cm, 
+               sal = sal.psu, 
+               do_mgl = odo.mg.l, 
+               do_pct = odo...sat, 
+               ph,
+               ph_mv = ph.mv,
+               turb = turbidity.fnu, 
+               depth = depth.m,  ##### if you collect level, change it here!!!
+               battery_v = battery.v, 
+               cable_pwr_v = cable.pwr.v)
+    
+    
+    head(dat2)
+    
+    
+    # open up a pdf file to print to
+    pdf(file=Titlepdf) 
+    
+    #make the graph page layout 4 rows and 2 columns so all graphs will fit on a page
+    par(mfcol=c(4,2), mar=c(2.1, 4.1, 1.1, 1.1), oma=c(1,1,2,1))
+    
+    ## make the graphs
+    
+    # water temp
+    plot(temp~datetime, data=dat2, 
+         type="l", 
+         xlab = "", xaxt='n', 
+         col="darkred")
+    axis.POSIXct(1, at=seq(min(dat2$datetime, na.rm=TRUE), 
+                           max(dat2$datetime, na.rm=TRUE), length.out=5), 
+                 format="%m/%d", cex.axis=0.9)
+    
+    # SpCond
+    plot(spcond~datetime, data=dat2, 
+         type="l", 
+         xlab = "", xaxt='n', 
+         col="darkblue")
+    axis.POSIXct(1, at=seq(min(dat2$datetime, na.rm=TRUE), 
+                           max(dat2$datetime, na.rm=TRUE), length.out=5),
+                 format="%m/%d", cex.axis=0.9)
+    
+    # salinity  
+    plot(sal~datetime, data=dat2, 
+         type="l", 
+         xlab = "", xaxt='n', 
+         col="darkgreen")
+    axis.POSIXct(1, at=seq(min(dat2$datetime, na.rm=TRUE), 
+                           max(dat2$datetime, na.rm=TRUE), length.out=5),
+                 format="%m/%d", cex.axis=0.9)
+    
+    # depth
+    ## MAY NEED TO CHANGE THIS TO LEVEL
+    plot(depth~datetime, data=dat2, 
+         type="l", 
+         xlab = "", xaxt='n', 
+         col="darkslategray")
+    axis.POSIXct(1, at=seq(min(dat2$datetime, na.rm=TRUE), 
+                           max(dat2$datetime, na.rm=TRUE), length.out=5),
+                 format="%m/%d", cex.axis=0.9)
+    
+    # DO% 
+    plot(do_pct~datetime, data=dat2, 
+         type="l", 
+         xlab = "", xaxt='n', 
+         col="darkorange")
+    axis.POSIXct(1, at=seq(min(dat2$datetime, na.rm=TRUE), 
+                           max(dat2$datetime, na.rm=TRUE), length.out=5),
+                 format="%m/%d", cex.axis=0.9)
+    
+    # # DO mg/L
+    # commented out so battery voltage can be included instead
+    # but if you want it back, just delete the ##s in front
+    # plot(DO_mgl~datetime, data=dat2, 
+    #      type="l", 
+    #      xlab = "", xaxt='n', 
+    #      col="darkmagenta")
+    # axis.POSIXct(1, at=seq(min(dat2$datetime, na.rm=TRUE), 
+    #                        max(dat2$datetime, na.rm=TRUE), length.out=5),
+    #              format="%m/%d", cex.axis=0.9)
+    
+    # pH
+    plot(ph~datetime, data=dat2, 
+         type="l", 
+         xlab = "", xaxt='n', 
+         col="darkturquoise")
+    axis.POSIXct(1, at=seq(min(dat2$datetime, na.rm=TRUE), 
+                           max(dat2$datetime, na.rm=TRUE), length.out=5),
+                 format="%m/%d", cex.axis=0.9)
+    
+    # turbidity
+    plot(turb~datetime, data=dat2, 
+         type="l", 
+         xlab = "", xaxt='n', 
+         col="darkkhaki")
+    axis.POSIXct(1, at=seq(min(dat2$datetime, na.rm=TRUE), 
+                           max(dat2$datetime, na.rm=TRUE), length.out=5),
+                 format="%m/%d", cex.axis=0.9)
+    
+    # battery
+    plot(battery_v~datetime, data=dat2, 
+         type="l", 
+         xlab = "", xaxt='n', 
+         col="orangered3")
+    axis.POSIXct(1, at=seq(min(dat2$datetime, na.rm=TRUE), 
+                           max(dat2$datetime, na.rm=TRUE), length.out=5),
+                 format="%m/%d", cex.axis=0.9)
+    
+    # put the title of the file above all the plots on the page
+    mtext(Title, outer=TRUE, side=3, cex=0.9, font=2)
+    
+    #turn off pdf printer
+    dev.off()
+    
+}
+
+print("Finished!")
+
