@@ -25,14 +25,20 @@ Water Quality Scripts
 
 `WQgraphs_rawEXO_looping`: runs through every Excel (.xls or .xlsx) file in the selected working directory; generates pdf output for each.
 
--   Make sure the only Excel files in your folder are files downloaded from EXOs. + Parameters plotted are: Temp, SpCond, Sal, Depth, DO\_pct, pH, Turb, and Battery.
--   If you need to graph Level instead of Depth, change it on lines 77 and 122 of the script.
+-   Packages needed for this script and an installation command if you need it:
+    -   `dplyr` - `install.packages('dplyr')`
+    -   `lubridate` - `install.packages('lubridate')`
+    -   `readxl` - `install.packages('readxl')`
+-   Make sure the only Excel files in your folder are files downloaded from EXOs.
+-   Parameters plotted are: Temp, SpCond, Sal, Depth, DO\_pct, pH, Turb, and Battery.
+-   If you need to graph Level instead of Depth, change it on lines 107 and 152 of the script.
 -   The name of the output file (and the title above the graphs) is, by default, the full name of the Excel file, which includes instrument serial number and date-time on which the file started. To cut off all the extra stuff at the end, uncomment line 27. (You do not have to comment out line 24, but you can if you want to.)
 
 ### WQgraphs\_QCfile\_looping: Loop through CDMO-returned QC files in a folder
 
 `WQgraphs_QCfile_looping`: runs through every CSV in the selected working directory; generates pdf output for each.
 
+-   The only package used in this script is `tcltk`, which is installed along with base R.
 -   Make sure the only CSVs in your folder are water quality QC files emailed from the CDMO after file upload.
 -   Parameters plotted are: Temp, SpCond, Sal, Depth, DO\_pct, pH, Turb, and Battery.
 -   If you need to graph Level instead of Depth, change it on line 102 of the script.
@@ -48,12 +54,12 @@ Weather Station Scripts
 
 `METgraphs_QCfile_single-file`: allows you to interactively select a single file from which to generate graphs. **This is usually the script I use for MET graphs, because we only download one file at once.**
 
+-   Packages needed for this script and an installation command if you need it:
+    -   `clifro` - `install.packages('clifro')`
+    -   `ggplot2` - `install.packages('ggplot2')`
 -   A pdf file with two pages is generated:
     -   The first page has line graphs of ATemp, RH, BP, TotPAR, WSpd, MaxWSpd, CumPrcp, and AvgVolt (which represents battery).
     -   The second page has a wind rose, which shows direction in addition to speed.
--   The `ggplot2` and `clifro` packages are required to run this. If you don't already have them, run these lines:
-    -   `install.packages("ggplot2")`
-    -   `install.packages("clifro")`
 
 ### METgraphs\_QCfile\_looping: Loop through files in a folder
 

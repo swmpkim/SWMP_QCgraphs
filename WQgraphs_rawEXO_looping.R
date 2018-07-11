@@ -1,10 +1,40 @@
-library(readxl)
-library(tidyverse)
-library(lubridate)
+# script to make graphs (8 per page) of WQ data by
+# looping through all .xls/.xlsx files in a folder
+# by Kim Cressman, Grand Bay NERR
+# kimberly.cressman@dmr.ms.gov
+# updated 2018-07-11
 
+
+### IMPORTANT
+# Make sure the ONLY .xls/.xlsx files in the folder you want to work in are files downloaded from YSI EXOs
+# This script has NOT been error-proofed so if you have a file that it doesn't recognize, the script will stop in its tracks
+
+
+### IMPORTANT 2
+# The folder-choice pop-up does NOT show up on top of other programs
+# You MUST either click on the RStudio icon to minimize RStudio OR just minimize everything else to make the pop-up visible 
+
+
+### IMPORTANT 3
+# If you are reporting Level instead of Depth, change it on lines 107 and 152 and save the script that way
+
+
+### INSTRUCTIONS
+# 1 - Put your cursor somewhere in this window
+# 2 - Push 'Ctrl' + 'A' to select the whole script
+# 3 - Push 'Ctrl' + 'Enter' to run the script
+# 4 - Minimize RStudio to get to the pop-up and choose the folder your QC files are in
+# 5 - Magic happens
+# 6 - Look in the folder you selected and pdf files should be there
+
+##########################################################################
+
+library(dplyr)
+library(lubridate)
+library(readxl)
+library(tcltk) #this package is part of base R and does not need to be installed separately
 
 # interactively choose which folder you want to work in
-library(tcltk) #this package is part of base R and does not need to be installed separately
 my.dir <- tk_choose.dir(getwd(), caption = "Choose which folder you want to work in")
 setwd(my.dir)
 
