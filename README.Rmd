@@ -107,4 +107,4 @@ Let me know if you run into any other issues! You can open a GitHub issue here o
 
 # Shout-outs  
 
-Thank you to John Haskins and Shannon Dunnigan, who have tested and improved versions of these scripts over the years.
+Thank you to John Haskins, Shannon Dunnigan, and Ethan Borque, who have tested and improved versions of these scripts!

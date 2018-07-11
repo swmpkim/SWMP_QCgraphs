@@ -19,11 +19,13 @@
 # 1 - Put your cursor somewhere in this window
 # 2 - Push 'Ctrl' + 'A' to select the whole script
 # 3 - Push 'Ctrl' + 'Enter' to run the script
-# 4 - Minimize RStudio to get to the pop-up and choose the folder your QC files are in
+# 4 - Minimize RStudio to get to the pop-up and choose the folder your exported EXO files are in
 # 5 - Magic happens
 # 6 - Look in the folder you selected and pdf files should be there
 
+
 ##########################################################################
+
 
 library(dplyr)
 library(lubridate)
