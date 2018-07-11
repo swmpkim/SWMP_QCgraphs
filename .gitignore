@@ -12,3 +12,4 @@ r scripts for QC.Rproj
 recent_deployment/
 testdir/
 WQgraphs_rawfile_EXO2.R
+WQgraphs_rawEXO_looping_test.R

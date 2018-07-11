@@ -10,6 +10,7 @@ R Scripts for SWMP QC
         -   [METgraphs\_QCfile\_looping: Loop through files in a folder](#metgraphs_qcfile_looping-loop-through-files-in-a-folder)
 -   [Instructions for running scripts](#instructions-for-running-scripts)
 -   [Some cautions](#some-cautions)
+-   [Shout-outs](#shout-outs)
 
 This is a collection of R scripts that can be used to QC SWMP data. Right click on the script name above to download. Each script has limited interactivity - in the course of running, you will be able to choose a working directory through Windows Explorer.
 
@@ -30,9 +31,17 @@ Water Quality Scripts
     -   `lubridate` - `install.packages('lubridate')`
     -   `readxl` - `install.packages('readxl')`
 -   Make sure the only Excel files in your folder are files downloaded from EXOs.
--   Parameters plotted are: Temp, SpCond, Sal, Depth, DO\_pct, pH, Turb, and Battery.
--   If you need to graph Level instead of Depth, change it on lines 107 and 152 of the script.
--   The name of the output file (and the title above the graphs) is, by default, the full name of the Excel file, which includes instrument serial number and date-time on which the file started. To cut off all the extra stuff at the end, uncomment line 27. (You do not have to comment out line 24, but you can if you want to.)
+-   Parameters plotted are: temp, spcond, sal, depth\_or\_level (script should work with either), do\_pct, ph, turb, and battery\_v.
+-   Script should work with either depth or level. Should also work for different units used when programming EXOs (e.g. salinity psu vs. salinity ppt).
+-   The name of the output file (and the title above the graphs) is, by default, the full name of the Excel file, which includes instrument serial number and date-time on which the file started. To cut off all the extra stuff at the end, uncomment line 57. (You do not have to comment out line 54, but you can if you want to.)
+
+#### Bugs so far
+
+Names are an issue if people have sondes programmed differently.
+
+-   BAND-AID APPLIED - Depth vs. Level. Solved by assigning the name `depth_or_level` to whichever parameter is in the file. This means the graph axes aren't labeled in a specific way. Probably good enough for QC purposes, but I'd love to improve it.
+-   FIXED - Sal psu vs. Sal ppt
+-   FIXED - Turbidity FNU vs. Turbidity NTU
 
 ### WQgraphs\_QCfile\_looping: Loop through CDMO-returned QC files in a folder
 
@@ -99,6 +108,10 @@ Some cautions
 These scripts have NOT been error-proofed.
 
 -   If you have some CSV in your working directory that does not match the format of CDMO-emailed QC files, the script will stop in its tracks and return an error message. Move the files you want to graph into their own folder and use that instead.
--   If your sites report level instead of depth, you'll need to change the parameter on line 102 of the `WQgraphs_QCfile_looping` script.
 
 Let me know if you run into any other issues! You can open a GitHub issue here or just email me. And if you know how to make these scripts more robust to errors, feel free to make a pull request. (If you don't know what that means, just email me the scripts with your updates and I'll make them available here.)
+
+Shout-outs
+==========
+
+Thank you to John Haskins and Shannon Dunnigan, who have tested and improved versions of these scripts over the years.

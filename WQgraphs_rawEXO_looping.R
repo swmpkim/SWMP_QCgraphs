@@ -15,10 +15,6 @@
 # You MUST either click on the RStudio icon to minimize RStudio OR just minimize everything else to make the pop-up visible 
 
 
-### IMPORTANT 3
-# If you are reporting Level instead of Depth, change it on lines 107 and 152 and save the script that way
-
-
 ### INSTRUCTIONS
 # 1 - Put your cursor somewhere in this window
 # 2 - Push 'Ctrl' + 'A' to select the whole script
@@ -83,6 +79,23 @@ for(i in 1:n)
     # use make.names() to get rid of spaces and weird characters
     names(dat) <- make.names(names(dat), unique = TRUE)
     
+    # make either sal.ppt or sal.psu return 'sal'
+    pos <- grep("sal", names(dat))
+    names(dat)[pos] <- "sal"
+    
+    # same thing for turbidity
+    pos <- grep("turbidity", names(dat))
+    names(dat)[pos] <- "turb"  
+    
+    # return depth or level as 'depth_or_level'
+    # reserves can change this individually if they only report one at all sites and want its name specifically
+    # figure out which is in the file
+    label.level <- sum(grepl("level", names(dat))) # 0 if no 'level' column; number otherwise
+    label.depth <- sum(grepl("depth", names(dat))) # 0 if no 'depth' column; number otherwise
+    if(label.level == 1) {pos.depth_or_level <- grep("level", names(dat))}
+    if(label.depth == 1) {pos.depth_or_level <- grep("depth", names(dat))}
+    names(dat)[pos.depth_or_level] <- "depth_or_level"
+    
     
     ### format and name more SWMP-ily  ####################
     ## get date and time into DateTime format by first
@@ -98,15 +111,14 @@ for(i in 1:n)
         select(datetime, 
                temp = temp..c, 
                spcond = spcond.ms.cm, 
-               sal = sal.psu, 
+               sal,  
                do_mgl = odo.mg.l, 
                do_pct = odo...sat, 
                ph,
                ph_mv = ph.mv,
-               turb = turbidity.fnu, 
-               depth = depth.m,  ##### if you collect level, change it here!!!
-               battery_v = battery.v, 
-               cable_pwr_v = cable.pwr.v)
+               turb, 
+               depth_or_level,
+               battery_v = battery.v)
     
     
     head(dat2)
@@ -147,9 +159,8 @@ for(i in 1:n)
                            max(dat2$datetime, na.rm=TRUE), length.out=5),
                  format="%m/%d", cex.axis=0.9)
     
-    # depth
-    ## MAY NEED TO CHANGE THIS TO LEVEL
-    plot(depth~datetime, data=dat2, 
+    # depth/level
+    plot(depth_or_level~datetime, data=dat2, 
          type="l", 
          xlab = "", xaxt='n', 
          col="darkslategray")
