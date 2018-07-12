@@ -34,10 +34,10 @@ library(tcltk) #this package is part of base R and does not need to be installed
 
 # interactively choose which folder you want to work in
 my.dir <- tk_choose.dir(getwd(), caption = "Choose which folder you want to work in")
-setwd(my.dir)
+# setwd(my.dir)
 
 # get the list of files in the directory that you want to graph
-names.dir <- dir(pattern = ".xls")
+names.dir <- list.files(path = my.dir, pattern = ".xls")
 n <- length(names.dir)
 
 for(i in 1:n)
@@ -54,19 +54,20 @@ for(i in 1:n)
     # If you want to get rid of all the 13A12345_010118_1200 stuff at the end of the file name, delete the # from the next line so that it runs:
     # Title = ifelse(x > 30, substr(myFile, 1, x-29), substr(myFile, 1, x-5))
     
-    Titlepdf <- paste0(Title, ".pdf")
-    
+    # make the full path to the file, first for reading, then for pdf output
+    full_file_path <- paste0(my.dir, "/", myFile)
+    Titlepdf <- paste0(full_file_path, ".pdf")
     
     ### read in the file  ################
     # first let R look at it to find where the real data starts
-    test_in <- read_excel(path = myFile, sheet = 1)
+    test_in <- read_excel(path = full_file_path, sheet = 1)
     # find the cell in column 1 that starts with Date -- 
     # this indicates the header row
     col1vec <- (test_in[,1])
     names(col1vec) <- "col1"
     pos <- grep("Date", col1vec$col1)
     # read in the data, beginning with the header row
-    dat <- read_excel(myFile, sheet = 1, skip = pos)
+    dat <- read_excel(path = full_file_path, sheet = 1, skip = pos)
     
     head(dat)
     
