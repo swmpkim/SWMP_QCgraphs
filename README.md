@@ -35,7 +35,7 @@ Water Quality Scripts
 -   Make sure the only Excel files in your folder are files downloaded from EXOs.
 -   Parameters plotted are: temp, spcond, sal, depth/level (script works with either), do\_pct, ph, turb, and battery\_v.
 -   Script should work with either depth or level. Should also work for different units used when programming EXOs (e.g. salinity psu vs. salinity ppt).
--   The name of the output file (and the title above the graphs) is, by default, the full name of the Excel file, which includes instrument serial number and date-time on which the file started. To cut off all the extra stuff at the end, uncomment line 57. (You do not have to comment out line 54, but you can if you want to.)
+-   The name of the output file (and the title above the graphs) is, by default, the full name of the Excel file, which includes instrument serial number and date-time on which the file started. To cut off all the extra stuff at the end, uncomment line 55. (You do not have to comment out line 52, but you can if you want to.)
 
 ### WQgraphs\_QCfile\_looping: Loop through CDMO-returned QC files in a folder
 
