@@ -32,10 +32,10 @@
 # interactively choose which folder you want to work in
 library(tcltk) #this package is part of base R and does not need to be installed separately
 my.dir <- tk_choose.dir(getwd(), caption = "Choose which folder you want to work in")
-setwd(my.dir)
+
 
 # get the list of files in the directory that you want to graph
-names.dir <- dir(pattern = ".csv")
+names.dir <- dir(path = my.dir, pattern = ".csv")
 n <- length(names.dir)
 
 for(i in 1:n)
@@ -43,12 +43,17 @@ for(i in 1:n)
   # find the next file in the loop
   myFile <- names.dir[i] 
   
+  # make the full path to the file, first for reading, then for pdf output
+  full_file_path <- paste0(my.dir, "/", myFile)
+  
+  
   # read in the file and generate names for output
-  met.data <- read.csv(myFile)
+  met.data <- read.csv(full_file_path)
   x <- nchar(myFile) # counting the characters in the file name
   Title = substr(myFile,1,x-4) # this should return the full name of the file (minus '.csv')
-  Titlepdf <- paste(Title, ".pdf", sep="") 
+  Titlepdf <- paste0(full_file_path, ".pdf") 
 
+  
   #format DateTime as POSIXct, which will turn it into a number that can be graphed
   #we are retaining the format of mm/dd/yyyy hh:mm
   met.data$DateTime <- as.POSIXct(met.data$TIMESTAMP, format = "%m/%d/%Y %H:%M", tz = 'America/Regina')

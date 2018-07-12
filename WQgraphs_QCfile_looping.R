@@ -15,9 +15,6 @@
 # You MUST either click on the RStudio icon to minimize RStudio OR just minimize everything else to make the pop-up visible 
 
 
-### IMPORTANT 3
-# If you are reporting Level instead of Depth, change it on line 102 and save the script that way
-
 
 ### INSTRUCTIONS
 # 1 - Put your cursor somewhere in this window
@@ -32,10 +29,9 @@
 # interactively choose which folder you want to work in
 library(tcltk) #this package is part of base R and does not need to be installed separately
 my.dir <- tk_choose.dir(getwd(), caption = "Choose which folder you want to work in")
-setwd(my.dir)
 
 # get the list of files in the directory that you want to graph
-names.dir <- dir(pattern = ".csv")
+names.dir <- list.files(path = my.dir, pattern = ".csv")
 n <- length(names.dir)
 
 for(i in 1:n)
@@ -43,11 +39,16 @@ for(i in 1:n)
   # find the next file in the loop
   myFile <- names.dir[i] 
   
+  # generate the full file path for reading and exporting files
+  # without the use of setwd()
+  full_file_path <- paste0(my.dir, "/", myFile)
+  
   # read in the file and generate names for output
-  ysi.data <- read.csv(myFile)
+  ysi.data <- read.csv(full_file_path)
   x <- nchar(myFile) # counting the characters in the file name
-  Title = substr(myFile,1,x-4) # this should return the full name of the file (minus '.csv')
-  Titlepdf <- paste0(Title, ".pdf")
+  Title = substr(myFile,1,x-4) # for top of graphs; this should return the full name of the file (minus '.csv')
+  Titlepdf <- paste0(full_file_path, ".pdf") # for export file
+
 
   # If there's already a DateTime column, don't do anything. If there's not, paste together Date and Time into DateTime.
   ifelse("DateTime" %in% names(ysi.data), ysi.data$DateTime <- ysi.data$DateTime, ysi.data$DateTime <- paste(ysi.data$Date, ysi.data$Time))

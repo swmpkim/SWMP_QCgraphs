@@ -3,7 +3,7 @@
 # from emailed CDMO QC files
 # by Kim Cressman, Grand Bay NERR
 # kimberly.cressman@dmr.ms.gov
-# updated 2017-06-02
+# updated 2018-07-12
 
 ### IMPORTANT
 # you need to have some packages installed
@@ -12,8 +12,8 @@
 # install.packages('ggplot2')
 
 ### IMPORTANT 2
-# The file-choice pop-up does NOT show up on top of other programs
-# You MUST either click on the RStudio icon to minimize RStudio OR just minimize everything else to make the pop-up visible 
+# The file-choice pop-up might not show up on top of other programs
+# Either click on the RStudio icon to minimize RStudio OR just minimize everything else to make the pop-up visible 
 
 ### INSTRUCTIONS
 # 1 - Put your cursor somewhere in this window
@@ -24,21 +24,16 @@
 # 6 - Look in the folder you selected and pdf files should be there
 
 
-# interactively choose which folder you want to work in
-library(tcltk) #this package is part of base R and does not need to be installed separately
-my.dir <- tk_choose.dir(getwd(), caption = "Set your working directory")
-setwd(my.dir)
-
 
 # interactively choose the file to work on
-myFile <-  tk_choose.files(getwd(), caption="Choose file")
+myFile <-  choose.files(getwd(), caption="Choose file")
 
 
 # read in the file and generate names for output  
 met.data <- read.csv(myFile)
 x <- nchar(myFile) # counting the characters in the file name
-Title = substr(myFile,x-20,x-4) # this should return the full name of the file (minus '.csv')
-Titlepdf <- paste0(Title, ".pdf") 
+Title = substr(myFile,x-20,x-4) # this returns the CDMO-standard name of the file (minus '.csv')
+Titlepdf <- sub(".csv", ".pdf", myFile) # this uses the original file path to generate an output file name
 
 
 #format DateTime as POSIXct, which will turn it into a number that can be graphed
