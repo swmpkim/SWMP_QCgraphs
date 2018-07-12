@@ -118,7 +118,6 @@ for(i in 1:n)
                do_mgl = odo.mg.l, 
                do_pct = odo...sat, 
                ph,
-               ph_mv = ph.mv,
                turb, 
                depth_or_level,
                battery_v = battery.v)
