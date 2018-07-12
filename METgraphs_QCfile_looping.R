@@ -4,7 +4,7 @@
 # from emailed CDMO QC files
 # by Kim Cressman, Grand Bay NERR
 # kimberly.cressman@dmr.ms.gov
-# updated 2017-06-02
+# updated 2018-07-12
 
 ### IMPORTANT
 # you need to have some packages installed

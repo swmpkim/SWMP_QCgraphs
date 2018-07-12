@@ -2,7 +2,7 @@
 # looping through all csv files in a folder
 # by Kim Cressman, Grand Bay NERR
 # kimberly.cressman@dmr.ms.gov
-# updated 2018-06-21
+# updated 2018-07-12
 
 
 ### IMPORTANT
@@ -64,12 +64,19 @@ for(i in 1:n)
 
   
   # return Depth or Level as 'Depth_or_Level'
-  # reserves can change this individually if they only report one at all sites and want its name specifically
+  # then generate the name for the y-axis based on which it is
+
   # figure out which is in the file
   label.level <- sum(grepl("^Level", names(ysi.data))) # 0 if no 'level' column; number otherwise
   label.depth <- sum(grepl("^Depth", names(ysi.data))) # 0 if no 'depth' column; number otherwise
-  if(label.level == 1) {pos.depth_or_level <- grep("Level", names(ysi.data))}
-  if(label.depth == 1) {pos.depth_or_level <- grep("Depth", names(ysi.data))}
+  if(label.level == 1) {
+      pos.depth_or_level <- grep("Level", names(ysi.data))
+      depth_or_level_name <- "Level"
+      }
+  if(label.depth == 1) {
+      pos.depth_or_level <- grep("Depth", names(ysi.data))
+      depth_or_level_name <- "Depth"
+      }
   names(ysi.data)[pos.depth_or_level] <- "Depth_or_Level"
   
     
@@ -112,7 +119,8 @@ for(i in 1:n)
   # depth / level
   plot(Depth_or_Level~DateTime, data=ysi.data, 
        type="l", 
-       xlab = "", xaxt='n', 
+       xlab = "", xaxt='n',
+       ylab = depth_or_level_name,
        col="darkslategray")
   axis.POSIXct(1, at=seq(min(ysi.data$DateTime, na.rm=TRUE), 
                          max(ysi.data$DateTime, na.rm=TRUE), length.out=5),

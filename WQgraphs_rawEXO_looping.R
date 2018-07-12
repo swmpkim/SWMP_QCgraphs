@@ -2,7 +2,7 @@
 # looping through all .xls/.xlsx files in a folder
 # by Kim Cressman, Grand Bay NERR
 # kimberly.cressman@dmr.ms.gov
-# updated 2018-07-11
+# updated 2018-07-12
 
 
 ### IMPORTANT
@@ -90,13 +90,21 @@ for(i in 1:n)
     pos <- grep("turbidity", names(dat))
     names(dat)[pos] <- "turb"  
     
+    
     # return depth or level as 'depth_or_level'
-    # reserves can change this individually if they only report one at all sites and want its name specifically
+    # then generate a name for the y-axis based on which it is
+    
     # figure out which is in the file
     label.level <- sum(grepl("level", names(dat))) # 0 if no 'level' column; number otherwise
     label.depth <- sum(grepl("depth", names(dat))) # 0 if no 'depth' column; number otherwise
-    if(label.level == 1) {pos.depth_or_level <- grep("level", names(dat))}
-    if(label.depth == 1) {pos.depth_or_level <- grep("depth", names(dat))}
+    if(label.level == 1) {
+        pos.depth_or_level <- grep("level", names(dat))
+        depth_or_level_name <- "level"
+        }
+    if(label.depth == 1) {
+        pos.depth_or_level <- grep("depth", names(dat))
+        depth_or_level_name <- "depth"
+        }
     names(dat)[pos.depth_or_level] <- "depth_or_level"
     
     
@@ -164,7 +172,8 @@ for(i in 1:n)
     # depth/level
     plot(depth_or_level~datetime, data=dat2, 
          type="l", 
-         xlab = "", xaxt='n', 
+         xlab = "", xaxt='n',
+         ylab = depth_or_level_name,
          col="darkslategray")
     axis.POSIXct(1, at=seq(min(dat2$datetime, na.rm=TRUE), 
                            max(dat2$datetime, na.rm=TRUE), length.out=5),
