@@ -34,7 +34,7 @@ library(tcltk) #this package is part of base R and does not need to be installed
 
 # interactively choose which folder you want to work in
 my.dir <- tk_choose.dir(getwd(), caption = "Choose which folder you want to work in")
-# setwd(my.dir)
+
 
 # get the list of files in the directory that you want to graph
 names.dir <- list.files(path = my.dir, pattern = ".xls")
