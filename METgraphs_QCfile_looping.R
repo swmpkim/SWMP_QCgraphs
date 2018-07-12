@@ -51,7 +51,7 @@ for(i in 1:n)
   met.data <- read.csv(full_file_path)
   x <- nchar(myFile) # counting the characters in the file name
   Title = substr(myFile,1,x-4) # this should return the full name of the file (minus '.csv')
-  Titlepdf <- paste0(full_file_path, ".pdf") 
+  Titlepdf <- paste0(my.dir, "/", Title, ".pdf") 
 
   
   #format DateTime as POSIXct, which will turn it into a number that can be graphed
