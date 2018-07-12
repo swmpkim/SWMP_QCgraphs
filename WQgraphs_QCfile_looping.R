@@ -47,7 +47,7 @@ for(i in 1:n)
   ysi.data <- read.csv(full_file_path)
   x <- nchar(myFile) # counting the characters in the file name
   Title = substr(myFile,1,x-4) # for top of graphs; this should return the full name of the file (minus '.csv')
-  Titlepdf <- paste0(full_file_path, ".pdf") # for export file
+  Titlepdf <- paste0(my.dir, "/", Title, ".pdf") # for export file
 
 
   # If there's already a DateTime column, don't do anything. If there's not, paste together Date and Time into DateTime.
