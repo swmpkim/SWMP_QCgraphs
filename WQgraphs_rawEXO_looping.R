@@ -191,7 +191,7 @@ for(i in 1:n)
     # # DO mg/L
     # commented out so battery voltage can be included instead
     # but if you want it back, just delete the ##s in front
-    # plot(DO_mgl~datetime, data=dat2, 
+    # plot(do_mgl~datetime, data=dat2, 
     #      type="l", 
     #      xlab = "", xaxt='n', 
     #      col="darkmagenta")
