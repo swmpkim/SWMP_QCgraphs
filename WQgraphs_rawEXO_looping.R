@@ -56,7 +56,7 @@ for(i in 1:n)
     
     # make the full path to the file, first for reading, then for pdf output
     full_file_path <- paste0(my.dir, "/", myFile)
-    Titlepdf <- paste0(full_file_path, ".pdf")
+    Titlepdf <- paste0(my.dir, "/", Title, ".pdf")
     
     ### read in the file  ################
     # first let R look at it to find where the real data starts
