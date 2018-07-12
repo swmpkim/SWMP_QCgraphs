@@ -61,7 +61,18 @@ for(i in 1:n)
   ysi.data$DateTimeA[is.na(ysi.data$DateTimeA)] <- ysi.data$DateTimeB[!is.na(ysi.data$DateTimeB)]
   # make the whole DateTime column that unified column
   ysi.data$DateTime <- ysi.data$DateTimeA
+
   
+  # return Depth or Level as 'Depth_or_Level'
+  # reserves can change this individually if they only report one at all sites and want its name specifically
+  # figure out which is in the file
+  label.level <- sum(grepl("^Level", names(ysi.data))) # 0 if no 'level' column; number otherwise
+  label.depth <- sum(grepl("^Depth", names(ysi.data))) # 0 if no 'depth' column; number otherwise
+  if(label.level == 1) {pos.depth_or_level <- grep("Level", names(ysi.data))}
+  if(label.depth == 1) {pos.depth_or_level <- grep("Depth", names(ysi.data))}
+  names(ysi.data)[pos.depth_or_level] <- "Depth_or_Level"
+  
+    
 
   # open up a pdf file to print to
   pdf(file=Titlepdf) 
@@ -98,9 +109,8 @@ for(i in 1:n)
                          max(ysi.data$DateTime, na.rm=TRUE), length.out=5),
                format="%m/%d", cex.axis=0.9)
   
-  # depth
-  ## MAY NEED TO CHANGE THIS TO LEVEL
-  plot(Depth~DateTime, data=ysi.data, 
+  # depth / level
+  plot(Depth_or_Level~DateTime, data=ysi.data, 
        type="l", 
        xlab = "", xaxt='n', 
        col="darkslategray")
